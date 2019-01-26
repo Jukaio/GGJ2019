@@ -14,8 +14,7 @@ public class PlayerController : MonoBehaviour
     //shooting
     private float axisXtemp;
     private float axisYtemp;
-    public int direction1;
-    public int direction2;
+    public int direction;
 
     //health 
     public Image[] healthImages;
@@ -39,18 +38,9 @@ public class PlayerController : MonoBehaviour
     {
         float axisX = 0f;
         float axisY = 0f;
-        if (this.gameObject.tag == "Player1")
-        {
-            axisX = Input.GetAxis("Horizontal1");
-            axisY = Input.GetAxis("Vertical1");
-            direction1 = Directions(axisX, axisY, direction1);
-        }
-        else if (this.gameObject.tag == "Player2")
-        {
-            axisX = Input.GetAxis("Horizontal2");
-            axisY = Input.GetAxis("Vertical2");
-            direction2 = Directions(axisX, axisY, direction2);
-        }
+
+        axisX = Input.GetAxis("Horizontal1");
+        axisY = Input.GetAxis("Vertical1");
 
         if (axisX != 0 || axisY != 0)
         {
@@ -58,8 +48,7 @@ public class PlayerController : MonoBehaviour
             axisYtemp = axisY;
         }
 
-        
-        
+        Directions(axisX, axisY, direction);
 
         transform.Translate(new Vector3(axisX, axisY) * Time.deltaTime * moveSpeed);
     }
@@ -87,45 +76,40 @@ public class PlayerController : MonoBehaviour
         return direction;
     }
 
-    //void updateSkulls()
-    //{
-    //    for (int i = 0; i < healthImages.Length; i++)
-    //    {
-    //        if (i < currHealth)
-    //        {
-    //            healthImages[i].sprite = healthSprites[0];
-    //        }
-    //        else
-    //        {
-    //            healthImages[i].sprite = healthSprites[1];
-    //        }
-    //    }
-    //}
+    void updateSkulls()
+    {
+        for (int i = 0; i < healthImages.Length; i++)
+        {
+            if (i < currHealth)
+            {
+                healthImages[i].sprite = healthSprites[0];
+            }
+            else
+            {
+                healthImages[i].sprite = healthSprites[1];
+            }
+        }
+    }
 
     void TakeDemange(int amount)
     {
         currHealth += amount;
         currHealth = Mathf.Clamp(currHealth, 0, startHearts);
-        PlayerPrefs.SetInt("Health", currHealth);
-        //updateSkulls();
+        updateSkulls();
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "mob" || other.gameObject.tag == "bullet")
+        if (other.gameObject.tag == "Player2" && this.gameObject.tag == "Player1")
         {
             StartCoroutine("Blink");
-            TakeDemange(-1);
+            this.TakeDemange(-1);
             if(currHealth <= 0)
             {
                 StartCoroutine("Wait");
             }
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision) 
-    {
-        
     }
 
     IEnumerator Wait()

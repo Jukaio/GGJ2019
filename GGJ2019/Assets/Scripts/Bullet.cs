@@ -18,8 +18,7 @@ public class Bullet : MonoBehaviour {
 
     void Update()
     {
-        Shoot(player1.direction1);
-        Shoot(player2.direction2);
+
     }
 
     void Shoot(int direction)
