@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
             axisYtemp = axisY;
         }
 
-        Directions(axisX, axisY, direction);
+        direction = Directions(axisX, axisY, direction);
 
         transform.Translate(new Vector3(axisX, axisY) * Time.deltaTime * moveSpeed);
     }
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void TakeDemange(int amount)
+    private void TakeDemange(int amount)
     {
         currHealth += amount;
         currHealth = Mathf.Clamp(currHealth, 0, startHearts);
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player2" && this.gameObject.tag == "Player1")
+        if (other.gameObject.tag == "Player2")
         {
             StartCoroutine("Blink");
             this.TakeDemange(-1);
@@ -109,7 +109,6 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine("Wait");
             }
         }
-
     }
 
     IEnumerator Wait()
@@ -117,7 +116,6 @@ public class PlayerController : MonoBehaviour
         //death.SetActive(true);
         transform.position = new Vector3(transform.position.x, transform.position.y, 20f);
         yield return new WaitForSeconds(2);
-        PlayerPrefs.SetInt("Health", 5);
         //Application.LoadLevel("Menu");
     }
 

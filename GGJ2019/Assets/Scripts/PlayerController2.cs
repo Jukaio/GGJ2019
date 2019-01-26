@@ -100,7 +100,7 @@ public class PlayerController2 : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player1" && this.gameObject.tag == "Player2")
+        if (other.gameObject.tag == "Player1")
         {
             StartCoroutine("Blink");
             this.TakeDemange(-1);
