@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
-    private PlayerShootController shootingController;
 
     public float moveSpeed;
 
@@ -28,14 +27,12 @@ public class PlayerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        shootingController = GetComponent<PlayerShootController>();
         TakeDemange(0);
     }
 
     private void Update()
     {
         Move();
-        shootingController.Shoot();
     }
 
     void Move()
