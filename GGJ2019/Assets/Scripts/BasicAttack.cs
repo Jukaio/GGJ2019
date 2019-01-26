@@ -7,10 +7,12 @@ public class BasicAttack : MonoBehaviour
     public GameObject hitbox;
     public float cooldown = 4;
     private float collisionBuffer = 0;
+    private PlayerController controller1;
+    int direction;
 
     void Start()
     {
-        
+        controller1 = GetComponent<PlayerController>();
     }
 
     
@@ -31,5 +33,19 @@ public class BasicAttack : MonoBehaviour
             else if (cooldown <= 0)
             cooldown = 0;
         collisionBuffer-= Time.deltaTime;
+
+        switch(controller1.direction)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
     }
+
+
 }

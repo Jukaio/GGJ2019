@@ -48,7 +48,7 @@ public class PlayerController2 : MonoBehaviour
             axisYtemp = axisY;
         }
 
-        Directions(axisX, axisY, direction);
+        direction =  Directions(axisX, axisY, direction);
 
         transform.Translate(new Vector3(axisX, axisY) * Time.deltaTime * moveSpeed);
     }
