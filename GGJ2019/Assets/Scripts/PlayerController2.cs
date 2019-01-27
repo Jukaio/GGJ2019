@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerController2 : MonoBehaviour
@@ -16,6 +17,12 @@ public class PlayerController2 : MonoBehaviour
     private float axisXtemp;
     private float axisYtemp;
     public int direction;
+    private Animator anim;
+    private BoxCollider2D theCollider;
+
+    public GameObject Front;
+    public GameObject Side;
+    public GameObject Rear;
 
     //health 
     public Image[] healthImages;
@@ -30,6 +37,8 @@ public class PlayerController2 : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         TakeDemange(0);
+        anim = GetComponent<Animator>();
+        theCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -80,18 +89,100 @@ public class PlayerController2 : MonoBehaviour
             dodgeCooldown -= Time.deltaTime;
         else
             dodgeCooldown = 0;
+
+        switch (direction)
+        {
+            case 1:
+                anim.SetInteger("Direction", 1);
+
+                anim.SetBool("Movement", true);
+                anim.speed = 0.4f;
+
+
+                if (axisX <= 0.3 || axisY <= 0.3)
+                {
+                    GetComponent<SpriteRenderer>().enabled = false;
+                    Front.GetComponent<SpriteRenderer>().enabled = false;
+                    Side.GetComponent<SpriteRenderer>().enabled = true;
+                    Side.GetComponent<SpriteRenderer>().flipX = true;
+                    Rear.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                theCollider.size = new Vector2(4.5f, 2.5f);
+                theCollider.offset = new Vector2(0f, -0.5f);
+                break;
+            case 2:
+                anim.SetInteger("Direction", 2);
+
+                anim.SetBool("Movement", true);
+                anim.speed = 0.4f;
+
+                if (axisX <= 0.3 || axisY <= 0.3)
+                {
+                    GetComponent<SpriteRenderer>().enabled = false;
+                    Front.GetComponent<SpriteRenderer>().enabled = false;
+                    Side.GetComponent<SpriteRenderer>().enabled = true;
+                    Side.GetComponent<SpriteRenderer>().flipX = false;
+                    Rear.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                theCollider.size = new Vector2(4.5f, 2.5f);
+                theCollider.offset = new Vector2(0f, -0.5f);
+                break;
+            case 3:
+                anim.SetInteger("Direction", 3);
+
+                anim.SetBool("Movement", true);
+                anim.speed = 0.4f;
+
+                if (axisX <= 0.3 || axisY <= 0.3)
+                {
+                    GetComponent<SpriteRenderer>().enabled = false;
+                    Front.GetComponent<SpriteRenderer>().enabled = true;
+                    Side.GetComponent<SpriteRenderer>().enabled = false;
+                    Rear.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                theCollider.size = new Vector2(2.25f, 3.75f);
+                theCollider.offset = new Vector2(0f, 0.215f);
+                break;
+            case 4:
+                anim.SetInteger("Direction", 4);
+
+                anim.SetBool("Movement", true);
+                anim.speed = 0.4f;
+
+                if (axisX <= 0.3 || axisY <= 0.3)
+                {
+                    GetComponent<SpriteRenderer>().enabled = false;
+                    Front.GetComponent<SpriteRenderer>().enabled = false;
+                    Side.GetComponent<SpriteRenderer>().enabled = false;
+                    Rear.GetComponent<SpriteRenderer>().enabled = true;
+                }
+                theCollider.size = new Vector2(2.5f, 3.25f);
+                theCollider.offset = new Vector2(0.15f, 0f);
+                break;
+        }
+
+        if (axisX != 0 || axisY != 0)
+        {
+            GetComponent<SpriteRenderer>().enabled = true;
+            Front.GetComponent<SpriteRenderer>().enabled = false;
+            Side.GetComponent<SpriteRenderer>().enabled = false;
+            Rear.GetComponent<SpriteRenderer>().enabled = false;
+            anim.SetBool("Movement", true);
+        }
+        else
+            anim.SetBool("Movement", false);
     }
 
     int Directions(float axisX, float axisY, int direction)
     {
         if (axisX < 0) //left
         {
-            spriteRenderer.flipX = false;
+            spriteRenderer.flipX = true;
             direction = 1;
         }
         else if (axisX > 0) //right
         {
-            spriteRenderer.flipX = true;
+            spriteRenderer.flipX = false;
             direction = 2;
         }
         else if (axisY < 0) //down
@@ -147,8 +238,7 @@ public class PlayerController2 : MonoBehaviour
         //death.SetActive(true);
         transform.position = new Vector3(transform.position.x, transform.position.y, 20f);
         yield return new WaitForSeconds(2);
-        PlayerPrefs.SetInt("Health", 5);
-        //Application.LoadLevel("Menu");
+        SceneManager.LoadScene("Player1win");
     }
 
     IEnumerator Blink()

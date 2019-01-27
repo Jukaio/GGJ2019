@@ -90,20 +90,20 @@ public class BasicAttack : MonoBehaviour
             switch (controller2.direction)
             {
                 case 1:
-                    hitbox.transform.position = gameObject.transform.position + (Vector3.left * 0.75f);
-                    hitbox.transform.eulerAngles = new Vector3(0, 0, 0);
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.left * 3.15f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 90);
                     break;
                 case 2:
-                    hitbox.transform.position = gameObject.transform.position + (Vector3.right * 0.75f);
-                    hitbox.transform.eulerAngles = new Vector3(0, 0, 0);
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.right * 3.15f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 270);
                     break;
                 case 3:
-                    hitbox.transform.position = gameObject.transform.position + (Vector3.down * 0.75f);
-                    hitbox.transform.eulerAngles = new Vector3(0, 0, 90);
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.down * 3f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 180);
                     break;
                 case 4:
-                    hitbox.transform.position = gameObject.transform.position + (Vector3.up * 0.75f);
-                    hitbox.transform.eulerAngles = new Vector3(0, 0, 90);
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.up * 3.15f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 0);
                     break;
             }
         }

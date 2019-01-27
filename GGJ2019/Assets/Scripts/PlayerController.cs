@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -83,7 +84,7 @@ public class PlayerController : MonoBehaviour
                     transform.position += Vector3.down * 2;
                     dodgeCooldown = 2;
                     break;
-            }
+        }
 
         transform.Translate(new Vector3(axisX, axisY) * Time.deltaTime * moveSpeed);
         if (dodgeCooldown > 0)
@@ -162,9 +163,6 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-
-
-
         if (axisX != 0 || axisY != 0)
         {
             GetComponent<SpriteRenderer>().enabled = true;
@@ -241,7 +239,7 @@ public class PlayerController : MonoBehaviour
         //death.SetActive(true);
         transform.position = new Vector3(transform.position.x, transform.position.y, 20f);
         yield return new WaitForSeconds(2);
-        //Application.LoadLevel("Menu");
+        SceneManager.LoadScene("Player2win");
     }
 
     IEnumerator Blink()
