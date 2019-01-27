@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class PlayerController2 : MonoBehaviour
 {
     private Rigidbody2D rb2d;
@@ -21,6 +22,8 @@ public class PlayerController2 : MonoBehaviour
     public Sprite[] healthSprites;
     private int startHearts = 5;
     public int currHealth = 5;
+
+    private float dodgeCooldown;
 
     void Start()
     {
@@ -50,7 +53,33 @@ public class PlayerController2 : MonoBehaviour
 
         direction =  Directions(axisX, axisY, direction);
 
+        if (Input.GetKeyDown("o") && dodgeCooldown <= 0)
+            switch (direction)
+            {
+                case 1:
+                    transform.position += Vector3.right * 2;
+                    dodgeCooldown = 2;
+                    break;
+                case 2:
+                    transform.position += Vector3.left * 2;
+                    dodgeCooldown = 2;
+                    break;
+                case 3:
+                    transform.position += Vector3.up * 2;
+                    dodgeCooldown = 2;
+                    break;
+                case 4:
+                    transform.position += Vector3.down * 2;
+                    dodgeCooldown = 2;
+                    break;
+            }
+
         transform.Translate(new Vector3(axisX, axisY) * Time.deltaTime * moveSpeed);
+
+        if (dodgeCooldown > 0)
+            dodgeCooldown -= Time.deltaTime;
+        else
+            dodgeCooldown = 0;
     }
 
     int Directions(float axisX, float axisY, int direction)
