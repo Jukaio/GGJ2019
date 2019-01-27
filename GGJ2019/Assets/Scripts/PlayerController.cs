@@ -97,10 +97,10 @@ public class PlayerController : MonoBehaviour
         currHealth = Mathf.Clamp(currHealth, 0, startHearts);
         updateSkulls();
     }
-
-    private void OnCollisionEnter2D(Collision2D other)
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player2")
+        if (other.gameObject.tag == "Player2Attack")
         {
             StartCoroutine("Blink");
             this.TakeDemange(-1);

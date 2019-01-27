@@ -98,10 +98,11 @@ public class PlayerController2 : MonoBehaviour
         updateSkulls();
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player1")
+        if (other.gameObject.tag == "Player1Attack")
         {
+            StartCoroutine("Blink");
             StartCoroutine("Blink");
             this.TakeDemange(-1);
             if (currHealth <= 0)
@@ -109,8 +110,8 @@ public class PlayerController2 : MonoBehaviour
                 StartCoroutine("Wait");
             }
         }
-
     }
+
 
     IEnumerator Wait()
     {
