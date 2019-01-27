@@ -23,6 +23,7 @@ public class PlayerController2 : MonoBehaviour
     public GameObject Front;
     public GameObject Side;
     public GameObject Rear;
+    public GameObject hitMarker;
 
     //health 
     public Image[] healthImages;
@@ -243,9 +244,9 @@ public class PlayerController2 : MonoBehaviour
 
     IEnumerator Blink()
     {
-        spriteRenderer.material.color = Color.clear;
+        hitMarker.SetActive(true);
         yield return new WaitForSeconds(0.2f);
-        spriteRenderer.material.color = Color.white;
+        hitMarker.SetActive(false);
     }
 
 }
