@@ -8,49 +8,94 @@ public class BasicAttack : MonoBehaviour
     public float cooldown = 1;
     private float collisionBuffer = 0;
     private PlayerController controller1;
+    private PlayerController2 controller2;
     int direction;
 
     void Start()
     {
         controller1 = GetComponent<PlayerController>();
+        controller2 = GetComponent<PlayerController2>();
     }
     
     void Update()
     {
-        if (cooldown <= 0 && Input.GetKey("q"))
+        if (tag == "Player1")
         {
-            hitbox.SetActive(true);
-            collisionBuffer = 0.5f;
-            cooldown = 1;
+            if (cooldown <= 0 && Input.GetKey("q"))
+            {
+                hitbox.SetActive(true);
+                collisionBuffer = 0.5f;
+                cooldown = 1;
+            }
+            else if (collisionBuffer <= 0)
+                hitbox.SetActive(false);
+
+            if (cooldown != 0)
+                if (cooldown >= 0)
+                    cooldown -= Time.deltaTime;
+                else if (cooldown <= 0)
+                    cooldown = 0;
+            collisionBuffer -= Time.deltaTime;
+
+
+            switch (controller1.direction)
+            {
+                case 1:
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.left * 0.75f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 0);
+                    break;
+                case 2:
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.right * 0.75f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 0);
+                    break;
+                case 3:
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.down * 0.75f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 90);
+                    break;
+                case 4:
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.up * 0.75f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 90);
+                    break;
+            }
         }
-        else if (collisionBuffer <= 0)
-            hitbox.SetActive(false);
-
-        if(cooldown != 0)
-            if (cooldown >= 0)
-            cooldown -= Time.deltaTime;
-            else if (cooldown <= 0)
-            cooldown = 0;
-        collisionBuffer-= Time.deltaTime;
-
-        switch (controller1.direction)
+        else if(tag == "Player2")
         {
-            case 1:
-                hitbox.transform.position = gameObject.transform.position + (Vector3.left * 0.75f);
-                hitbox.transform.eulerAngles = new Vector3(0, 0, 0);
-                break;
-            case 2:
-                hitbox.transform.position = gameObject.transform.position + (Vector3.right * 0.75f);
-                hitbox.transform.eulerAngles = new Vector3(0, 0, 0);
-                break;
-            case 3:
-                hitbox.transform.position = gameObject.transform.position + (Vector3.down * 0.75f);
-                hitbox.transform.eulerAngles = new Vector3(0, 0, 90);
-                break;
-            case 4:
-                hitbox.transform.position = gameObject.transform.position + (Vector3.up * 0.75f);
-                hitbox.transform.eulerAngles = new Vector3(0, 0, 90);
-                break;
+            if (cooldown <= 0 && Input.GetKey("p"))
+            {
+                hitbox.SetActive(true);
+                collisionBuffer = 0.5f;
+                cooldown = 1;
+            }
+            else if (collisionBuffer <= 0)
+                hitbox.SetActive(false);
+
+            if (cooldown != 0)
+                if (cooldown >= 0)
+                    cooldown -= Time.deltaTime;
+                else if (cooldown <= 0)
+                    cooldown = 0;
+            collisionBuffer -= Time.deltaTime;
+
+
+            switch (controller2.direction)
+            {
+                case 1:
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.left * 0.75f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 0);
+                    break;
+                case 2:
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.right * 0.75f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 0);
+                    break;
+                case 3:
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.down * 0.75f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 90);
+                    break;
+                case 4:
+                    hitbox.transform.position = gameObject.transform.position + (Vector3.up * 0.75f);
+                    hitbox.transform.eulerAngles = new Vector3(0, 0, 90);
+                    break;
+            }
         }
     }
 
